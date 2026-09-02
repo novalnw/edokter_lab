@@ -2,7 +2,8 @@ name: Build Docker Image
 
 on:
   push:
-  branches: [ "main" ]
+    branches:
+      - "main"
 
 jobs:
   build:
@@ -19,5 +20,5 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        push: false  # Ubah ke true kalau mau langsung di-push ke Docker Hub
+        push: false
         tags: edokter_lab:latest
