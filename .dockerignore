@@ -1,0 +1,7 @@
+dockerfile
+docker-compose.yml
+k8s-edokter.yaml
+minikube-linux-amd64
+kubectl
+.git
+.github

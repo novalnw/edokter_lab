@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edokter-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edokter-db
+  template:
+    metadata:
+      labels:
+        app: edokter-db
+    spec:
+      containers:
+      - name: db
+        image: mariadb:10.5
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        - name: MYSQL_DATABASE
+          value: db_edokter
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  selector:
+    app: edokter-db
+  ports:
+    - port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edokter-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edokter-web
+  template:
+    metadata:
+      labels:
+        app: edokter-web
+    spec:
+      containers:
+      - name: web
+        image: edokter_lab-web:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edokter-web-service
+spec:
+  type: NodePort
+  selector:
+    app: edokter-web
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080

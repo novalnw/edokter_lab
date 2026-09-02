@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edokter-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edokter-db
+  template:
+    metadata:
+      labels:
+        app: edokter-db
+    spec:
+      containers:
+      - name: db
+        image: mariadb:10.5
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        - name: MYSQL_DATABASE
+          value: db_edokter
+        - name: MYSQL_USER
+          value: admin_lab
+        - name: MYSQL_PASSWORD
+          value: admin123
+        ports:
+        - containerPort: 3306
