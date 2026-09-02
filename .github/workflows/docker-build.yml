@@ -1,0 +1,23 @@
+name: Build Docker Image
+
+on:
+  push:
+  branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false  # Ubah ke true kalau mau langsung di-push ke Docker Hub
+        tags: edokter_lab:latest
