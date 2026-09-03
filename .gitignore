@@ -2,3 +2,4 @@ db_connect.php
 .env
 minikube*
 kubectl*
+*.tar.gz
