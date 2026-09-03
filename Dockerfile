@@ -22,7 +22,6 @@ RUN a2enmod mpm_prefork
 RUN a2enmod rewrite
 
 # Hapus index.html default bawaan Apache Ubuntu supaya tidak menutupi index.php kita
-RUN rm -f /var/www/html/index.html
 
 RUN sed -i "s/80/\${PORT}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
