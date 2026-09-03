@@ -6,14 +6,10 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     && docker-php-ext-install mysqli pdo pdo_mysql
 
-# Hapus paksa modul MPM event/worker bawaan dari direktori mod-enabled Apache
-RUN rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* \
-    && ln -s /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/ \
-    && ln -s /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/
+# Nonaktifkan MPM event/worker lalu aktifkan prefork dengan bersih
+RUN a2dismod -f mpm_event mpm_worker && a2enmod mpm_prefork rewrite
 
-RUN a2enmod rewrite
-
-# Bikin Apache dengerin port dinamis Railway
+# Konfigurasi port Apache agar otomatis ngikutin port dinamis Railway
 RUN sed -i "s/80/\${PORT}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 COPY . /var/www/html/
