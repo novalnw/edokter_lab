@@ -7,9 +7,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN a2dismod -f mpm_event mpm_worker && a2enmod mpm_prefork
-
 RUN a2enmod rewrite
 
-RUN sed -i "s/80/\${PORT}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# Ubah port default Apache ke port Railway lewat env variable saat runtime
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 COPY . /var/www/html/
