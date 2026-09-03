@@ -1,3 +1,0 @@
-[phases.setup]
-phpVersion = "8.2"
-phpExtensions = ["mysqli", "pdo", "pdo_mysql"]
