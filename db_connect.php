@@ -1,5 +1,8 @@
 <?php
+
 // Koneksi database otomatis (lokal / cloud Railway)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 $host = getenv('MYSQLHOST') ?: 'localhost';
 $user = getenv('MYSQLUSER') ?: 'root';
 $pass = getenv('MYSQLPASSWORD') ?: '';
